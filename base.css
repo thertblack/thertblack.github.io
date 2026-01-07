@@ -79,6 +79,7 @@ body {
   letter-spacing: 0.11em;
   text-transform: uppercase;
   font-size: 0.9rem;
+  color: var(--accent-soft);
 }
 
 .nav__logo {
@@ -430,6 +431,8 @@ button {
     display: inline-flex;
   }
 
+  
+
   .split,
   .split--reverse {
     grid-template-columns: minmax(0, 1fr);
@@ -448,3 +451,12 @@ button {
     align-items: flex-start;
   }
 }
+
+.btn {
+  text-decoration: none;
+}
+
+.nav__brand {
+  text-decoration: none;
+}
+
