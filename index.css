@@ -128,3 +128,27 @@
     order: -1;
   }
 }
+
+.transition-center {
+  text-align: center;
+}
+
+.transition-center .section__intro {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Section 05 panel sizing + spacing */
+.links-panel {
+  max-width: 860px;          /* smaller box */
+  margin: 0 auto;            /* centered */
+  padding: 2.2rem 2.5rem;    /* inner spacing like your other panels */
+}
+
+/* Make sure the label/title don't hug the edges on small screens */
+@media (max-width: 600px) {
+  .links-panel {
+    padding: 1.7rem 1.4rem;
+  }
+}
+
