@@ -77,4 +77,58 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+    // ------------ SCROLLSPY (ACTIVE NAV LINK ON SCROLL) ------------
+  const navLinksAll = document.querySelectorAll('.nav__links .nav__link');
+  const header = document.querySelector('.site-header');
+  const headerHeight = header ? header.offsetHeight : 0;
 
+  const sections = [
+    document.getElementById('top'),
+    document.getElementById('about'),
+    document.getElementById('book'),
+    document.getElementById('contact')
+  ].filter(Boolean);
+
+  const setActiveLink = (sectionId) => {
+    navLinksAll.forEach((a) => a.classList.remove('nav__link--active'));
+    const active = Array.from(navLinksAll).find(
+      (a) => (a.getAttribute('href') || '') === `#${sectionId}`
+    );
+    if (active) active.classList.add('nav__link--active');
+  };
+
+  // If you are basically at the bottom, force "contact" active
+  const handleBottom = () => {
+    const pxFromBottom = 4; // tolerance
+    const atBottom =
+      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - pxFromBottom;
+
+    if (atBottom) setActiveLink('contact');
+  };
+
+  if ('IntersectionObserver' in window && sections.length) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        // Bottom override (fixes short last section)
+        handleBottom();
+
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible) setActiveLink(visible.target.id);
+      },
+      {
+        root: null,
+        threshold: [0.2, 0.35, 0.5],
+        rootMargin: `-${headerHeight + 10}px 0px -45% 0px`
+      }
+    );
+
+    sections.forEach((s) => spy.observe(s));
+    setActiveLink('top');
+
+    window.addEventListener('scroll', handleBottom, { passive: true });
+  } else {
+    setActiveLink('top');
+  }
